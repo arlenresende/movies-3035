@@ -26,7 +26,6 @@ const Home = () => {
 
   const{state,loading,error, setSearchTerm,searchTerm, setIsLoading} = useHomeFetch();
 
-  console.log(state);
 
   if (error) return <div> Algo está errado.</div>
 
@@ -43,7 +42,8 @@ const Home = () => {
         }
         <SearchBar setSearchTerm={setSearchTerm} />
         <Grid header={ searchTerm ? 'Resultado da Busca' : " Filmes Polupares "}>
-          { state.results.map(movie => (
+          {console.log(state.results)}
+          { state.results.length > 0 ? state.results.map(movie => (
             <Thumb
               key={movie.id}
               clickable
@@ -59,12 +59,11 @@ const Home = () => {
                 month: 'long',
                 year: 'numeric',
                 timeZone: 'America/Sao_Paulo',
-            })
-}
+              }) }
               note={movie.vote_average}
             
             />  
-          )) }
+          )) : <p className="error-txt">Não foi possível encontrar o filme Digitado</p>  }
         </Grid>
             { loading && <Spinner /> }
         {
